@@ -1,0 +1,184 @@
+WinMan:
+    RegistrationPage:
+    RailWaySystemPage:
+    EntryPage:
+    ListOfStatistics:
+    BuyTickets:
+    ShowAllRoutes:
+
+<RegistrationPage>:
+    name: 'RegistrationPage'
+    MDCard:
+        orientation: 'vertical'
+        padding: 25
+        spacing: 25
+        size_hint: None, None
+        size: 400,300
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        elevation:10
+        MDLabel:
+            text:'Registration Page'
+        TextInput:
+            id: cust_login_reg
+        TextInput:
+            id: cust_password_reg
+        Button:
+            text: 'Sign in '
+            on_press: if root.do_registration()==True : root.manager.current = 'RailWaySystemPage'
+        Button:
+            text: 'Sign up '
+            on_press: root.manager.current = 'EntryPage'
+<EntryPage>:
+    name: 'EntryPage'
+    MDCard:
+        orientation: 'vertical'
+        padding: 25
+        spacing: 25
+        size_hint: None, None
+        size: 400,300
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        elevation:10
+        MDLabel:
+            text:'Welcome, please entry'
+        TextInput:
+            id: cust_login
+        TextInput:
+            id: cust_password
+        Button:
+            text: 'Sign in '
+            on_press: 
+                if root.do_entry() == True : root.manager.current = 'RailWaySystemPage'
+        Button:
+            text: 'Sign up '
+            on_press: root.manager.current = 'RegistrationPage'
+<RailWaySystemPage>:
+    name:'RailWaySystemPage'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 25
+        spacing: 25
+        size_hint: None, None
+        size: 400,300
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        elevation:10
+        Button:
+            text:'Push me'
+            on_release:app.root.current='RegistrationPage'
+        ToggleButton:
+            
+            text:'departure date'
+            on_release:root.show_calendar()
+        ToggleButton:
+           
+            text:'arrival date'
+            on_release:root.show_calendar()
+       
+          
+        Button:
+            id:submit_for_stations_btn
+            text:'Buy ticket'
+            on_press: root.manager.current='TicketPurchase'
+        Button:
+            id:Statistics
+            text:'Show statistics'
+            on_press:root.manager.current='StatisicsPage'        
+<ListOfStatistics>:
+    name:'StatisicsPage'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 25
+        spacing: 25
+        size_hint: None, None
+        size: 400,300
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        elevation:10
+        Button:
+            id:GenderStatistics
+            text:'Gender statistics'
+            on_press:root.show_statistics('gender statistics')
+        Button:
+            id:StatusStatistics
+            text:'statistics by status'
+            on_press:root.show_statistics('statistics by status')
+        Button:
+            id:StationStatistics
+            text:'the most popular station'
+            on_press:root.show_statistics('the most popular station')
+        Button:
+            id:DCStatistics
+            text:'discount cards statistics'
+            on_press:root.show_statistics('')
+        Button:
+            id:Back
+            text:'Back'
+            on_press:root.manager.current='RailWaySystemPage'
+<BuyTickets>: 
+    name:'TicketPurchase'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 25
+        spacing: 25
+        size_hint: None, None
+        size: 700,500
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        elevation:10    
+        MDTextFieldRound:
+            id:station_id_start
+            hint_text:'choose your first station'
+        MDLabel:
+            id:list_of_train
+            text:'display'
+        Button:
+            id:submit_for_stations_btn
+            text:'submit'
+            on_press: root.find_me_all_trains() 
+        Button:
+            id:show_routes_btn
+            text:'Show Routes'
+            on_press: root.manager.current='ShowAllRoutes'
+        MDTextFieldRound:
+            id:station_id_end
+            hint_text:'choose your destination point'
+        MDLabel:
+            id:end_station_display
+            text:'display'
+        Button:
+            id:submit_for_end_station_btn
+            text:'submit'
+            on_press: root.buy_me_a_ticket()
+        Button:
+            id:Back
+            text:'Back'
+            on_press:root.manager.current='RailWaySystemPage'
+<ShowAllRoutes>:
+    name:'ShowAllRoutes'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 30
+        spacing: 30
+        size_hint: None, None
+        size: 700,500
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        elevation:10   
+        MDTextFieldRound:
+            id:train_id_target
+            hint_text:'choose your train'
+        MDLabel:
+            id:list_of_routes
+            text:'display'
+   
+    Button:
+        size_hint: None, None
+        size: 50,70
+        pos_hint: {'center_x': .5, 'center_y': .1}
+        id:submit_for_trains_btn
+        text:'submit'
+        on_press: root.find_me_all_routes() 
+    Button:
+        size_hint: None, None
+        size: 70,50
+        pos_hint: {'center_x': .45, 'center_y': .1}
+        id:submit_for_trains_btn
+        text:'back'
+        on_press: root.manager.current='TicketPurchase'
+        
